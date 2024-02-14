@@ -6,7 +6,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { ISingleWordProps, IWord } from "../../types";
 import { deleteWord, updateWord } from "./wordsSlice";
 import { fetchTranslate } from "../../utils";
-import { IconButton, TableRow } from "@mui/material";
+import { IconButton, TableRow, TextField } from "@mui/material";
 
 const SingleWordEl = styled(TableRow)`
   & td {
@@ -67,8 +67,7 @@ const SingleWord = ({ number, learnWord, translate }: ISingleWordProps) => {
       <td>
         {isInput ? (
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
+            <TextField
               autoFocus
               onBlur={handleSubmit}
               onChange={handleChange}

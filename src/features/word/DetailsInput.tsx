@@ -19,28 +19,20 @@ const HeaderInputEl = styled.div`
   justify-content: space-between;
   padding: 15px 0;
   gap: 10px;
-  flex-shrink: 0;
+  flex: 1;
 
   & .translation {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 12px;
-    flex: 1;
 
     & input {
       display: inline-block;
       padding-left: 10px;
       font-size: 20px;
       font-weight: 700;
-    }
-  }
-
-  @media (max-width: 767px) {
-    height: inherit;
-    flex: 1;
-    & .translation {
-      flex: 0;
+      width: 100%;
     }
   }
 `;
@@ -104,7 +96,7 @@ const DetailsInput = () => {
         onBlur={setWord}
       />
       <span className="translation">
-        Russian:{" "}
+        Russian:
         <TextField
           variant="standard"
           size="small"
@@ -112,6 +104,7 @@ const DetailsInput = () => {
           onChange={(e) => {
             setRussian(e.target.value);
           }}
+          sx={{ flex: 1 }}
         />
       </span>
       <span className="translation">
@@ -123,6 +116,7 @@ const DetailsInput = () => {
           onChange={(e) => {
             setEnglish(e.target.value);
           }}
+          sx={{ flex: 1 }}
         />
       </span>
       <ButtonComponent

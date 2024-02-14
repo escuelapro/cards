@@ -13,14 +13,14 @@ const Notebook = styled.div`
   flex-shrink: 1;
   align-content: center;
   border: 4px solid;
-  width: 600px;
-  height: 700px;
+  width: 80vw;
+  height: 80vh;
   border-radius: 24px;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
 
-  @media (max-height: 799px) {
+  /* @media (max-height: 799px) {
     height: 500px;
   }
 
@@ -34,7 +34,7 @@ const Notebook = styled.div`
   }
   @media (max-width: 374px) {
     height: 400px;
-  }
+  } */
 `;
 
 const Main = ({ children }: MainProps) => {
