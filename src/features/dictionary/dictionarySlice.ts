@@ -4,7 +4,7 @@ import { cardsRef } from "../../app/firebase";
 import { put, select } from "redux-saga/effects";
 import { RootState } from "../../app/store";
 
-import { fetchTranslate, getRandomColor } from "../../utils";
+import { getRandomColor } from "../../utils";
 import { ICard } from "../../types";
 
 interface IDictionaryState {
@@ -21,8 +21,9 @@ export function* getDictionariesSaga(): any {
   yield put(setAllDictionary(cards));
 }
 
-export function* addDictionarySaga({ payload }: PayloadAction<string>): any {
-  const ruWord = yield fetchTranslate(payload, "en", "ru");
+export function* addDictionarySaga({
+  payload,
+}: PayloadAction<{ en: string; ru: string; es?: string }>): any {
   const newDictionary: ICard = {
     coverImage: "",
     configs: {
@@ -35,8 +36,8 @@ export function* addDictionarySaga({ payload }: PayloadAction<string>): any {
       },
     },
     title: {
-      en: payload,
-      ru: ruWord,
+      en: payload.en,
+      ru: payload.ru,
     },
     words: [],
   };
@@ -51,6 +52,7 @@ export function* addDictionarySaga({ payload }: PayloadAction<string>): any {
 export function* deleteDictionarySaga({ payload }: PayloadAction<string>): any {
   yield put(deleteOneDictionary(payload));
   const { list } = yield select(selectAllDictionaries);
+
   yield updateDoc(cardsRef, "cards", list);
 }
 
@@ -102,11 +104,17 @@ export const DELETE_DICTIONARY = "dictionaries/deleteDictionary";
 export const UPDATE_DICTIONARY = "dictionaries/updateDictionary";
 
 export const getDictionaries = createAction(GET_DICTIONARIES);
-export const addDictionary = createAction<string>(ADD_DICTIONARY);
+export const addDictionary = createAction<{}>(ADD_DICTIONARY);
 export const deleteDictionary = createAction<string>(DELETE_DICTIONARY);
 export const updateDictionary = createAction<ICard>(UPDATE_DICTIONARY);
 
 //SELECTORS
 export const selectAllDictionaries = (state: RootState) => state.dictionaries;
+export const selectDictionary = (state: RootState, dictionaryId: string) => {
+  const dictionaries = state.dictionaries.list;
+  return dictionaries.find(
+    (dictionary) => dictionary.title.en === dictionaryId
+  );
+};
 
 export default dictionarySlice.reducer;

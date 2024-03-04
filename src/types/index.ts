@@ -1,18 +1,29 @@
-import { ReactNode } from "react";
+import { ChangeEvent, FormEvent, ReactNode } from "react";
 
 export interface MainProps {
   children: ReactNode;
 }
 
 export interface FormProps {
-  onSubmit: (payload?: any) => void;
-  onBlur?: React.Dispatch<React.SetStateAction<string>>;
+  onSubmit: (payload: { en: string; ru: string; es?: string }) => void;
+}
+
+export interface InputProps {
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
+  value: string;
 }
 
 interface ICardStyle {
   color: string;
   type: string;
+}
+
+export interface SubmitButtonProps {
+  disabled: boolean;
+  text: string;
+  type: "button" | "submit" | "reset";
+  onClick?: (e: FormEvent<HTMLInputElement>) => void;
 }
 
 interface ITitleStyle {

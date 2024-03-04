@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { imagesRef } from "../app/firebase";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
@@ -51,8 +51,10 @@ const DetailsHeader = styled.div`
 const DetailsPage = () => {
   const coverImage = useSelector(selectImage);
   const { en } = useSelector(selectCardTitle);
+
   const dispatch = useDispatch();
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -70,8 +72,10 @@ const DetailsPage = () => {
   useEffect(() => {
     if (slug) {
       dispatch(getActiveCard(slug));
+    } else {
+      navigate("/");
     }
-  }, [slug, dispatch]);
+  }, [slug]);
   return (
     <Main>
       <Title>{en}</Title>

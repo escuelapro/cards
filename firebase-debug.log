@@ -1,0 +1,26 @@
+[debug] [2024-03-04T06:25:54.511Z] ----------------------------------------------------------------------
+[debug] [2024-03-04T06:25:54.514Z] Command:       /Users/vitaliypyak/.nvm/versions/node/v20.11.1/bin/node /Users/vitaliypyak/.nvm/versions/node/v20.11.1/bin/firebase database:import /escuela-pro.appspot.com/2024-02-01T11:42:30_14405 https://escuela-pro.firebaseio.com
+[debug] [2024-03-04T06:25:54.514Z] CLI Version:   13.4.0
+[debug] [2024-03-04T06:25:54.514Z] Platform:      darwin
+[debug] [2024-03-04T06:25:54.515Z] Node Version:  v20.11.1
+[debug] [2024-03-04T06:25:54.515Z] Time:          Mon Mar 04 2024 13:25:54 GMT+0700 (Индокитай)
+[debug] [2024-03-04T06:25:54.515Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-04T06:25:54.577Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-04T06:25:54.578Z] > authorizing via signed-in user (vitaliipiak@gmail.com)
+[debug] [2024-03-04T06:25:54.578Z] [iam] checking project escuela-pro for permissions ["firebase.projects.get","firebasedatabase.instances.update"]
+[debug] [2024-03-04T06:25:54.580Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/escuela-pro:testIamPermissions [none]
+[debug] [2024-03-04T06:25:54.580Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/escuela-pro:testIamPermissions x-goog-quota-user=projects/escuela-pro
+[debug] [2024-03-04T06:25:54.580Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/escuela-pro:testIamPermissions {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2024-03-04T06:25:55.636Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/escuela-pro:testIamPermissions 200
+[debug] [2024-03-04T06:25:55.637Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/escuela-pro:testIamPermissions {"permissions":["firebase.projects.get","firebasedatabase.instances.update"]}
+[debug] [2024-03-04T06:25:55.637Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/escuela-pro [none]
+[debug] [2024-03-04T06:25:56.012Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/escuela-pro 200
+[debug] [2024-03-04T06:25:56.012Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/escuela-pro {"projectId":"escuela-pro","projectNumber":"273545826595","displayName":"Escuela","name":"projects/escuela-pro","resources":{"hostingSite":"escuela-pro","realtimeDatabaseInstance":"escuela-pro","storageBucket":"escuela-pro.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_7def57c5-99ff-48a5-a003-0119e92382c6"}
+[debug] [2024-03-04T06:25:56.013Z] >>> [apiv2][query] GET https://firebasedatabase.googleapis.com/v1beta/projects/escuela-pro/locations/-/instances/escuela-pro [none]
+[debug] [2024-03-04T06:25:57.261Z] <<< [apiv2][status] GET https://firebasedatabase.googleapis.com/v1beta/projects/escuela-pro/locations/-/instances/escuela-pro 200
+[debug] [2024-03-04T06:25:57.261Z] <<< [apiv2][body] GET https://firebasedatabase.googleapis.com/v1beta/projects/escuela-pro/locations/-/instances/escuela-pro {"name":"projects/273545826595/locations/us-central1/instances/escuela-pro","project":"projects/273545826595","databaseUrl":"https://escuela-pro.firebaseio.com","type":"DEFAULT_DATABASE","state":"ACTIVE"}
+[debug] [2024-03-04T06:29:02.533Z] >>> [apiv2][query] GET https://escuela-pro.firebaseio.com/escuela-pro.appspot.com/2024-02-01T11:42:30_14405.json shallow=true
+[debug] [2024-03-04T06:29:02.537Z] Error: ENOENT: no such file or directory, open 'https://escuela-pro.firebaseio.com'
+[error] 
+[error] Error: An unexpected error has occurred.

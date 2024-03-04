@@ -1,17 +1,27 @@
-import { FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Form from "../../components/Form";
-
 import { updateDictionary } from "../dictionary/dictionarySlice";
-import { fetchTranslate } from "../../utils";
-import { addWord } from "./wordsSlice";
+
 import { RootState } from "../../app/store";
-import { IWord } from "../../types";
 import ButtonComponent from "../../components/ButtonComponent";
-import { TextField } from "@mui/material";
+
+import { FormEl } from "../../components/Form";
+import SubmitButton from "../../components/SubmitButton";
+import Input from "../../components/Input";
+import { IWord } from "../../types";
+import { addWord } from "./wordsSlice";
+
+const DetailsForm = styled(FormEl)`
+  flex-direction: column;
+  align-items: stretch;
+  & span {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
 
 const HeaderInputEl = styled.div`
   display: flex;
@@ -42,41 +52,21 @@ const DetailsInput = () => {
   const [english, setEnglish] = useState("");
   const [russian, setRussian] = useState("");
   const navigate = useNavigate();
-
+  const ref = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
   const activeCard = useSelector((state: RootState) => state.activeCard);
 
-  const handleTranslate = async () => {
-    if (word === "") {
-      setEnglish("");
-      setRussian("");
-    } else {
-      try {
-        const translations = await Promise.all([
-          fetchTranslate(word, "es", "ru"),
-          fetchTranslate(word, "es", "en"),
-        ]);
-        setRussian(translations[0].toLowerCase());
-        setEnglish(translations[1].toLowerCase());
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setWord(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    const newWord: IWord = {
-      learnWord: word,
-      translate: {
-        en: english.toLowerCase(),
-        ru: russian.toLowerCase(),
-      },
-    };
-    if (russian !== "" && english !== "") {
-      dispatch(addWord(newWord));
-      setWord("");
-    }
+  const handleEnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEnglish(e.target.value);
+  };
+
+  const handleRuChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setRussian(e.target.value);
   };
 
   const handleSave = () => {
@@ -84,45 +74,59 @@ const DetailsInput = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    handleTranslate();
-  }, [word]);
+  const handleSubmitWord = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newWord: IWord = {
+      learnWord: word,
+      translate: {
+        en: english.toLowerCase(),
+        ru: russian.toLowerCase(),
+      },
+    };
+    if (russian !== "" && english !== "" && word !== "") {
+      dispatch(addWord(newWord));
+      setWord("");
+      setEnglish("");
+      setRussian("");
+      if (ref.current) {
+        ref.current.focus();
+      }
+    }
+  };
 
   return (
     <HeaderInputEl>
-      <Form
-        placeholder="introduce una palabra"
-        onSubmit={handleSubmit}
-        onBlur={setWord}
-      />
-      <span className="translation">
-        Russian:
-        <TextField
-          variant="standard"
-          size="small"
-          value={russian}
-          onChange={(e) => {
-            setRussian(e.target.value);
-          }}
-          sx={{ flex: 1 }}
+      <DetailsForm onSubmit={handleSubmitWord}>
+        <Input
+          ref={ref}
+          placeholder="introduce una palabra"
+          value={word}
+          handleChange={handleChange}
         />
-      </span>
-      <span className="translation">
-        English:
-        <TextField
-          variant="standard"
-          size="small"
+        <Input
+          placeholder="enter word"
           value={english}
-          onChange={(e) => {
-            setEnglish(e.target.value);
-          }}
-          sx={{ flex: 1 }}
+          handleChange={handleEnChange}
         />
-      </span>
-      <ButtonComponent
-        handleSave={handleSave}
-        disabled={activeCard.words.length < 5 || activeCard.words.length > 20}
-      />
+        <Input
+          placeholder="введите слово"
+          value={russian}
+          handleChange={handleRuChange}
+        />
+        <span>
+          <SubmitButton
+            type="submit"
+            text="Add word"
+            disabled={word === "" || english === "" || russian === ""}
+          />
+          <ButtonComponent
+            handleSave={handleSave}
+            disabled={
+              activeCard.words.length < 5 || activeCard.words.length > 20
+            }
+          />
+        </span>
+      </DetailsForm>
     </HeaderInputEl>
   );
 };

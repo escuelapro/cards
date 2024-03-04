@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header";
 import DictionaryPage from "./pages/DictionaryPage";
@@ -30,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DictionaryPage />} />
         <Route path="/cards/:slug" element={<DetailsPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </AppEl>
   );

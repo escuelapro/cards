@@ -50,6 +50,9 @@ const wordsSlice = createSlice({
         (word) => action.payload !== word.learnWord
       );
     },
+    clearActiveCard: (state) => {
+      return (state = initialState);
+    },
     updateWord: (state, { payload }) => {
       state.words = state.words.map((word, index) => {
         if (index === payload.number - 1) {
@@ -65,8 +68,14 @@ const wordsSlice = createSlice({
   },
 });
 
-export const { setAсtiveCard, addWord, deleteWord, updateWord, addCoverImage } =
-  wordsSlice.actions;
+export const {
+  setAсtiveCard,
+  addWord,
+  deleteWord,
+  updateWord,
+  addCoverImage,
+  clearActiveCard,
+} = wordsSlice.actions;
 
 //SAGA ACTIONS
 export const GET_ACTIVE_CARD = "activeCard/getActiveCard";

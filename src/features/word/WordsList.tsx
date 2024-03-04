@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useEffect } from "react";
 
 const WordsListEl = styled(TableContainer)`
   flex: 1;
@@ -47,6 +48,7 @@ const WarningEl = styled.span`
 const WordsList = () => {
   const allWords = useSelector(selectWordsList);
 
+  useEffect(() => {}, [allWords]);
   return (
     <>
       {(allWords.length >= 5 && allWords.length <= 20) || (
